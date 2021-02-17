@@ -15,6 +15,17 @@ app.config.from_mapping(
     DATABASE=os.path.join(app.instance_path, 'database', DATABASE_NAME),
 )
 
+def init_database():
+    db = sqlite3.connect(DATABASE_NAME)
+    cursor= db.cursor()
+
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS products(prod_id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    prod_name TEXT UNIQUE NOT NULL,
+                    prod_quantity INTEGER NOT NULL,
+                    unallocated_quantity INTEGER);
+    """)
+    db.commit()
 
 @app.route("/")
 def home():
