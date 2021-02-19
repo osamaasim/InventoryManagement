@@ -319,7 +319,7 @@ def delete():
         in_place = dict(in_place)
         out_place = dict(out_place)
 
-        # print(in_place, out_place)
+        # print(in_place, out_place.)
         all_place = {}
         for x in in_place.keys():
             if x in out_place.keys():
