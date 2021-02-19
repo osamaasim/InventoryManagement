@@ -63,7 +63,7 @@ def summary():
     db = sqlite3.connect(DATABASE_NAME)
     cursor = db.cursor()
     try:
-        cursor.execute("SELECT * FROM location")  # <---------------------------------FIX THIS
+        cursor.execute("SELECT * FROM location")  
         warehouse = cursor.fetchall()
         cursor.execute("SELECT * FROM products")
         products = cursor.fetchall()
@@ -200,10 +200,7 @@ def movement():
 
             log_summary += [(temp_prod_name + temp_loc_name + (sum_to_loc[0] - sum_from_loc[0],))]
 
-    # CHECK if reductions are calculated as well!
-    # summary data --> in format:
-    # {'Asus Zenfone 2': {'Mahalakshmi': 50, 'Gorhe': 50},
-    # 'Prada watch': {'Malad': 50, 'Mahalakshmi': 115}, 'Apple iPhone': {'Airoli': 75}}
+    # checking if reductions are calculated as well
     alloc_json = {}
     for row in log_summary:
         try:
@@ -233,7 +230,7 @@ def movement():
                     WHERE products.prod_name == ? AND location.loc_name == ?
                 """, (quantity, prod_name, to_loc))
 
-                # IMPORTANT to maintain consistency
+                # maintaining consistency
                 cursor.execute("""
                 UPDATE products 
                 SET unallocated_quantity = unallocated_quantity - ? 
@@ -256,7 +253,7 @@ def movement():
                 WHERE products.prod_name == ? AND location.loc_name == ?
                 """, (quantity, prod_name, from_loc))
 
-                # IMPORTANT to maintain consistency
+                # maintaining consistency
                 cursor.execute("""
                 UPDATE products 
                 SET unallocated_quantity = unallocated_quantity + ? 
